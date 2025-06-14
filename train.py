@@ -7,6 +7,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from timm import create_model
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 
 
 class FER2013Dataset(Dataset):
@@ -56,11 +57,16 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=50, 
     model.to(device)
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=1)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=1, verbose=True)
     best_loss = float('inf')
     no_improve = 0
+    train_losses, val_losses = [], []
+    train_accs, val_accs = [] , []
     for epoch in range(epochs):
         model.train()
+        epoch_loss = 0.0
+        correct = 0
+        total = 0
         train_iter = tqdm(train_loader, desc=f'Epoch {epoch + 1}/{epochs}', leave=False)
         for images, labels in train_iter:
             images, labels = images.to(device), labels.to(device)
@@ -70,6 +76,14 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=50, 
             loss.backward()
             optimizer.step()
             train_iter.set_postfix({'loss': loss.item()})
+            epoch_loss += loss.item() * images.size(0)
+            _, preds = torch.max(outputs, 1)
+            correct += (preds == labels).sum().item()
+            total += labels.size(0)
+        train_loss = epoch_loss / total if total > 0 else 0.0
+        train_acc = 100.0 * correct / total if total > 0 else 0.0
+        train_losses.append(train_loss)
+        train_accs.append(train_acc)
 
         model.eval()
         correct = 0
@@ -86,8 +100,10 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=50, 
                 correct += (preds == labels).sum().item()
                 total += labels.size(0)
         val_loss = running_loss / total if total > 0 else 0.0
-        acc = 100.0 * correct / total if total > 0 else 0.0
-        print(f'Epoch {epoch+1}/{epochs} - val loss: {val_loss:.4f} - acc: {acc:.2f}%')
+        val_acc = 100.0 * correct / total if total > 0 else 0.0
+        val_losses.append(val_loss)
+        val_accs.append(val_acc)
+        print(f'Epoch {epoch+1}/{epochs} - val loss: {val_loss:.4f} - acc: {val_acc:.2f}%')
         scheduler.step(val_loss)
 
         if val_loss < best_loss:
@@ -104,6 +120,25 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=50, 
         os.makedirs(os.path.dirname(weight_path), exist_ok=True)
         torch.save(model.state_dict(), weight_path)
     print(f'Saved best model to {weight_path}')
+
+    # plot training curves
+    epochs_range = range(1, len(train_losses) + 1)
+    plt.figure()
+    plt.plot(epochs_range, train_losses, label='train')
+    plt.plot(epochs_range, val_losses, label='val')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training vs Validation Loss')
+    plt.legend()
+
+    plt.figure()
+    plt.plot(epochs_range, train_accs, label='train')
+    plt.plot(epochs_range, val_accs, label='val')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy (%)')
+    plt.title('Training vs Validation Accuracy')
+    plt.legend()
+    plt.show()
 
 
 if __name__ == '__main__':
