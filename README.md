@@ -10,7 +10,6 @@ This project provides a lightweight demo of real-time facial expression recognit
 - Display results with bounding boxes and scores
 - Smooth predictions over several frames to reduce flicker
 
-
 ## Requirements
 
 - Python 3.8+
@@ -49,5 +48,8 @@ python train.py
 Training outputs a weight file at `weights/emotion_vit.pth` which will be
 used automatically by the demo.
 
-The training pipeline now applies random horizontal flips for augmentation and
-uses the correct FER2013 label ordering to improve classification accuracy.
+The training pipeline now applies additional augmentation (random rotation and
+color jitter) and uses the correct FER2013 label ordering. It runs for up to
+30 epochs with early stopping if the validation loss does not improve for three
+epochs. A learning rate scheduler automatically reduces the learning rate when
+progress stalls.
