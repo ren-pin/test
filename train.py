@@ -56,7 +56,7 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=50, 
     model.to(device)
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=1, verbose=True)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=1)
     best_loss = float('inf')
     no_improve = 0
     for epoch in range(epochs):
