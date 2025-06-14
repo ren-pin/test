@@ -35,7 +35,6 @@ Press `q` to quit the application.
 
 Pretrained weights greatly improve recognition accuracy. Download a MobileViT emotion recognition checkpoint and place it at `weights/emotion_vit.pth`. If the file is missing, the model will start from ImageNet pretrained weights, which work reasonably but are less accurate for emotion recognition.
 
-
 ## Training on FER2013
 
 The repository expects the FER2013 dataset to be placed in a folder named
