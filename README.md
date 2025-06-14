@@ -15,11 +15,12 @@ This project provides a lightweight demo of real-time facial expression recognit
 - PyTorch
 - OpenCV (`opencv-python`)
 - NumPy
+- timm
 
 Install dependencies with:
 
 ```bash
-pip install torch opencv-python numpy
+pip install -r requirements.txt
 ```
 
 ## Running
