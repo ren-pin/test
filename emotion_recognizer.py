@@ -1,0 +1,31 @@
+import cv2
+import torch
+import numpy as np
+from model import load_model
+
+
+LABELS = ["angry", "disgust", "fear", "happy", "sad", "surprise", "neutral"]
+
+
+class EmotionRecognizer:
+    def __init__(self, weight_path=None, device='cpu'):
+        self.device = device
+        self.model = load_model(weight_path, device)
+        self.softmax = torch.nn.Softmax(dim=1)
+
+    def preprocess(self, img):
+        img = cv2.resize(img, (96, 96))
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = img / 255.0
+        img = (img - 0.5) / 0.5
+        tensor = torch.tensor(img.transpose(2, 0, 1), dtype=torch.float32).unsqueeze(0)
+        return tensor.to(self.device)
+
+    def predict(self, img):
+        tensor = self.preprocess(img)
+        with torch.no_grad():
+            logits = self.model(tensor)
+            probs = self.softmax(logits)
+            score, idx = torch.max(probs, dim=1)
+        label = LABELS[idx.item()]
+        return label, score.item()
