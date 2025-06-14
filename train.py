@@ -9,6 +9,7 @@ from timm import create_model
 from tqdm import tqdm
 
 
+
 class FER2013Dataset(Dataset):
     """Dataset loader for FER2013 CSV files."""
 
@@ -56,6 +57,7 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=5, b
         model.train()
         train_iter = tqdm(train_loader, desc=f'Epoch {epoch + 1}/{epochs}', leave=False)
         for images, labels in train_iter:
+
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
             outputs = model(images)

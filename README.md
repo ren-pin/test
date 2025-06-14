@@ -2,6 +2,7 @@
 
 This project provides a lightweight demo of real-time facial expression recognition using a MobileViT Transformer model.
 
+
 ## Features
 
 - Capture frames from the webcam
@@ -13,10 +14,10 @@ This project provides a lightweight demo of real-time facial expression recognit
 
 - Python 3.8+
 - PyTorch
- - timm
- - tqdm
- - OpenCV (`opencv-python`)
- - NumPy
+- timm
+- tqdm
+- OpenCV (`opencv-python`)
+- NumPy
 
 Install dependencies with:
 
