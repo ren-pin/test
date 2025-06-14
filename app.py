@@ -7,7 +7,8 @@ from emotion_recognizer import EmotionRecognizer
 
 def main():
     detector = FaceDetector()
-    recognizer = EmotionRecognizer()
+    # Use a short history of predictions to smooth out noise between frames
+    recognizer = EmotionRecognizer(smooth_window=5)
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("Unable to access camera")

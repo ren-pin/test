@@ -9,14 +9,14 @@ from timm import create_model
 from tqdm import tqdm
 
 
-
 class FER2013Dataset(Dataset):
     """Dataset loader for FER2013 CSV files."""
 
     def __init__(self, csv_path, label_map=None, transform=None):
         self.df = pd.read_csv(csv_path)
         self.transform = transform
-        self.label_map = label_map or {0: 0, 1: 1, 2: 2, 3: 3, 4: 6, 5: 4, 6: 5}
+        # FER2013 uses labels [0-6] in the same order as our class list
+        self.label_map = label_map or {i: i for i in range(7)}
 
     def __len__(self):
         return len(self.df)
@@ -36,6 +36,7 @@ class FER2013Dataset(Dataset):
 def get_dataloaders(data_dir, batch_size=64):
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
+        transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
     ])
@@ -49,7 +50,7 @@ def get_dataloaders(data_dir, batch_size=64):
 def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=5, batch_size=64, lr=1e-3):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     train_loader, val_loader = get_dataloaders(data_dir, batch_size)
-    model = create_model('mobilevit_xxs', pretrained=False, num_classes=7)
+    model = create_model('mobilevit_xxs', pretrained=True, num_classes=7)
     model.to(device)
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -57,7 +58,6 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=5, b
         model.train()
         train_iter = tqdm(train_loader, desc=f'Epoch {epoch + 1}/{epochs}', leave=False)
         for images, labels in train_iter:
-
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
             outputs = model(images)
