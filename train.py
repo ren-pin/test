@@ -50,7 +50,7 @@ def get_dataloaders(data_dir, batch_size=64):
     return train_loader, val_loader
 
 
-def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=30, batch_size=64, lr=1e-3, patience=3):
+def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=50, batch_size=64, lr=1e-3, patience=3):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     train_loader, val_loader = get_dataloaders(data_dir, batch_size)
     model = create_model('mobilevit_xxs', pretrained=True, num_classes=7)
