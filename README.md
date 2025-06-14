@@ -1,10 +1,11 @@
 # Real-time Facial Expression Recognition Demo
 
 
-This project provides a lightweight demo of real-time facial expression recognition using a MobileViT Transformer model.
-
-
-## Features
+ - timm
+ - tqdm
+ - OpenCV (`opencv-python`)
+ - NumPy
+pip install torch opencv-python numpy timm tqdm
 
 - Capture frames from the webcam
 - Detect faces using OpenCV Haar cascades
