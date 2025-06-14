@@ -1,6 +1,4 @@
 import cv2
-import torch
-import numpy as np
 from face_detector import FaceDetector
 from emotion_recognizer import EmotionRecognizer
 
