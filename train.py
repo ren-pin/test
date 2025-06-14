@@ -6,6 +6,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from timm import create_model
+from tqdm import tqdm
+
 
 
 class FER2013Dataset(Dataset):
@@ -53,18 +55,23 @@ def train(data_dir='fer2013', weight_path='weights/emotion_vit.pth', epochs=5, b
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     for epoch in range(epochs):
         model.train()
-        for images, labels in train_loader:
+        train_iter = tqdm(train_loader, desc=f'Epoch {epoch + 1}/{epochs}', leave=False)
+        for images, labels in train_iter:
+
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
             outputs = model(images)
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
+            train_iter.set_postfix({'loss': loss.item()})
+
         model.eval()
         correct = 0
         total = 0
+        val_iter = tqdm(val_loader, desc='Validating', leave=False)
         with torch.no_grad():
-            for images, labels in val_loader:
+            for images, labels in val_iter:
                 images, labels = images.to(device), labels.to(device)
                 outputs = model(images)
                 _, preds = torch.max(outputs, 1)

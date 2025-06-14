@@ -1,4 +1,3 @@
-
 import os
 import cv2
 import torch
@@ -10,7 +9,6 @@ LABELS = ["angry", "disgust", "fear", "happy", "sad", "surprise", "neutral"]
 
 
 class EmotionRecognizer:
-
     def __init__(self, weight_path="weights/emotion_vit.pth", device=None):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.model = load_model(weight_path, self.device)

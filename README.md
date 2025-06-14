@@ -1,6 +1,5 @@
 # Real-time Facial Expression Recognition Demo
 
-
 This project provides a lightweight demo of real-time facial expression recognition using a MobileViT Transformer model.
 
 
@@ -9,7 +8,6 @@ This project provides a lightweight demo of real-time facial expression recognit
 - Capture frames from the webcam
 - Detect faces using OpenCV Haar cascades
 - Recognize seven basic emotions with a MobileViT Transformer
-
 - Display results with bounding boxes and scores
 
 ## Requirements
@@ -17,14 +15,14 @@ This project provides a lightweight demo of real-time facial expression recognit
 - Python 3.8+
 - PyTorch
 - timm
+- tqdm
 - OpenCV (`opencv-python`)
 - NumPy
 
 Install dependencies with:
 
 ```bash
-pip install torch opencv-python numpy timm
-
+pip install torch opencv-python numpy timm tqdm
 ```
 
 ## Running
