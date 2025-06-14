@@ -10,6 +10,7 @@ This project provides a lightweight demo of real-time facial expression recognit
 - Display results with bounding boxes and scores
 - Smooth predictions over several frames to reduce flicker
 
+
 ## Requirements
 
 - Python 3.8+
@@ -34,7 +35,6 @@ python app.py
 Press `q` to quit the application.
 
 Pretrained weights greatly improve recognition accuracy. Download a MobileViT emotion recognition checkpoint and place it at `weights/emotion_vit.pth`. If the file is missing, the model will start from ImageNet pretrained weights, which work reasonably but are less accurate for emotion recognition.
-
 
 ## Training on FER2013
 
