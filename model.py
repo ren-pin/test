@@ -1,3 +1,4 @@
+import os
 import torch
 from torch import nn
 
@@ -24,8 +25,12 @@ class SimpleViT(nn.Module):
 
 
 def load_model(weight_path=None, device='cpu'):
+    """Load model weights with an optional custom path."""
+    if weight_path is None:
+        weight_path = os.path.join(os.path.dirname(__file__), "weights", "emotion_vit.pth")
+
     model = SimpleViT()
-    if weight_path:
+    if os.path.exists(weight_path):
         model.load_state_dict(torch.load(weight_path, map_location=device))
     model.to(device)
     model.eval()
