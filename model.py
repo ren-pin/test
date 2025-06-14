@@ -1,3 +1,4 @@
+
 """Model utilities using a lightweight MobileViT architecture."""
 
 import os
