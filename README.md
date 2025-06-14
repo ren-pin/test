@@ -30,5 +30,5 @@ python app.py
 
 Press `q` to quit the application.
 
-The model weights can be provided via `model.pth` in the project directory. If no weights are found, the model runs with random initialization (for demonstration purposes only).
+Place the model weights as `emotion_vit.pth` inside a `weights/` folder located next to the code. If no weights are found, the model runs with random initialization (for demonstration purposes only).
 
