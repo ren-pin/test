@@ -1,5 +1,8 @@
+
+import os
 import cv2
 import torch
+import numpy as np
 from model import load_model
 
 
@@ -7,13 +10,14 @@ LABELS = ["angry", "disgust", "fear", "happy", "sad", "surprise", "neutral"]
 
 
 class EmotionRecognizer:
-    def __init__(self, weight_path=None, device='cpu'):
-        self.device = device
-        self.model = load_model(weight_path, device)
+
+    def __init__(self, weight_path="weights/emotion_vit.pth", device=None):
+        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = load_model(weight_path, self.device)
         self.softmax = torch.nn.Softmax(dim=1)
 
     def preprocess(self, img):
-        img = cv2.resize(img, (96, 96))
+        img = cv2.resize(img, (224, 224))
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = img / 255.0
         img = (img - 0.5) / 0.5
