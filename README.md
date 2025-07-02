@@ -34,6 +34,13 @@ python app.py
 
 Press `q` to quit the application.
 
+To run emotion recognition on an arbitrary image instead of the webcam, use
+`predict_image.py`:
+
+```bash
+python predict_image.py path/to/image.jpg
+```
+
 Pretrained weights greatly improve recognition accuracy. Download a MobileViT emotion recognition checkpoint and place it at `weights/emotion_vit.pth`. If the file is missing, the model will start from ImageNet pretrained weights, which work reasonably but are less accurate for emotion recognition.
 
 
@@ -56,4 +63,6 @@ color jitter) and uses the correct FER2013 label ordering. It runs for up to
 epochs. A learning rate scheduler automatically reduces the learning rate when
 progress stalls.
 After training finishes, the script displays plots showing the loss and
+
 accuracy curves for both the training and validation sets.
+
