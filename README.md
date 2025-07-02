@@ -63,4 +63,6 @@ color jitter) and uses the correct FER2013 label ordering. It runs for up to
 epochs. A learning rate scheduler automatically reduces the learning rate when
 progress stalls.
 After training finishes, the script displays plots showing the loss and
+
 accuracy curves for both the training and validation sets.
+
