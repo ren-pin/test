@@ -66,3 +66,14 @@ After training finishes, the script displays plots showing the loss and
 
 accuracy curves for both the training and validation sets.
 
+
+## Evaluating on the FER2013 Test Set
+
+Once you have a trained model at `weights/emotion_vit.pth` and the `test.csv`
+file from FER2013 placed in `fer2013/`, you can measure accuracy on the test
+split with:
+
+```bash
+python evaluate.py
+```
+
