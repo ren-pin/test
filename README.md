@@ -41,6 +41,15 @@ To run emotion recognition on an arbitrary image instead of the webcam, use
 python predict_image.py path/to/image.jpg
 ```
 
+To run emotion recognition on a video file instead of the webcam, use
+`predict_video.py`:
+
+```bash
+python predict_video.py path/to/video.mp4
+```
+
+Press `q` to quit the application.
+
 Pretrained weights greatly improve recognition accuracy. Download a MobileViT emotion recognition checkpoint and place it at `weights/emotion_vit.pth`. If the file is missing, the model will start from ImageNet pretrained weights, which work reasonably but are less accurate for emotion recognition.
 
 
