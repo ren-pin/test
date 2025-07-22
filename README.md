@@ -90,3 +90,13 @@ The script prints overall accuracy, top‑3 accuracy, precision, recall and
 F1‑score for each class as well as the confusion matrix. Average inference
 time per batch is also reported.
 
+
+## Generating Annotated Test Images
+
+Convert `fer2013/test.csv` to images and run the trained model on each face with:
+
+```bash
+python predict_fer2013_images.py
+```
+
+All images are saved with bounding boxes and predicted labels under the `out/` directory.
