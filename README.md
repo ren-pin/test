@@ -88,7 +88,9 @@ python evaluate.py
 
 The script prints overall accuracy, top‑3 accuracy, precision, recall and
 F1‑score for each class as well as the confusion matrix. Average inference
-time per batch is also reported.
+time per batch is also reported. In addition, confidence statistics for
+correct and incorrect predictions (mean, variance, max and min) are shown.
+
 
 
 ## Generating Annotated Test Images
