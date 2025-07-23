@@ -88,5 +88,16 @@ python evaluate.py
 
 The script prints overall accuracy, top‑3 accuracy, precision, recall and
 F1‑score for each class as well as the confusion matrix. Average inference
-time per batch is also reported.
+time per batch is also reported. In addition, confidence statistics for
+correct and incorrect predictions (mean, variance, max and min) are shown.
 
+
+## Visualizing FER2013 Test Predictions
+
+To convert `fer2013/test.csv` into individual images and run emotion recognition on each entry, use:
+
+```bash
+python predict_csv.py --csv fer2013/test.csv --out out
+```
+
+The script shows each prediction in a window similar to the realtime demo and saves the annotated images to the specified output directory (default is `out/`). Press `q` to exit early.
