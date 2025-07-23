@@ -92,12 +92,13 @@ time per batch is also reported. In addition, confidence statistics for
 correct and incorrect predictions (mean, variance, max and min) are shown.
 
 
-## Visualizing FER2013 Test Predictions
 
-To convert `fer2013/test.csv` into individual images and run emotion recognition on each entry, use:
+## Generating Annotated Test Images
+
+Convert `fer2013/test.csv` to images and run the trained model on each face with:
 
 ```bash
-python predict_csv.py --csv fer2013/test.csv --out out
+python predict_fer2013_images.py
 ```
 
-The script shows each prediction in a window similar to the realtime demo and saves the annotated images to the specified output directory (default is `out/`). Press `q` to exit early.
+All images are saved with bounding boxes and predicted labels under the `out/` directory.
